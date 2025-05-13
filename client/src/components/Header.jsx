@@ -20,11 +20,11 @@ const Header = () => {
         <Link to="/stats" className={location.pathname === '/stats' ? 'active' : ''}>
           Статистика
         </Link>
-        <Link to="/profile" className={location.pathname === '/profile' ? 'active' : ''}>
-          Профиль
-        </Link>
         <Link to="/psychological" className={location.pathname === '/psychological' ? 'active' : ''}>
           Опросники
+        </Link>
+        <Link to="/profile" className={location.pathname === '/profile' ? 'active' : ''}>
+          Профиль
         </Link>
       </nav>
   

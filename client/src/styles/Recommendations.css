@@ -1,0 +1,59 @@
+/* В файле Recommendations.css */
+.recommendation-section {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border-left: 5px solid var(--secondary-color);
+}
+
+.recommendation-section:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.recommendation-section h2 {
+    position: relative;
+    display: inline-block;
+    color: var(--dark-color);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.recommendation-section h2:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 40px;
+    height: 3px;
+    background-color: var(--secondary-color);
+    border-radius: 2px;
+}
+
+.recommendation-section h3 {
+    color: var(--dark-color);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.recommendation-section p {
+    color: var(--text-color);
+    line-height: 1.7;
+    font-size: 1.05rem;
+    max-width: 95%;
+    position: relative;
+    padding-left: 1.25rem;
+}
+
+.recommendation-section p:before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-weight: bold;
+}
