@@ -3,10 +3,11 @@ import '../styles/StepCounter.css'
 
 const StepCounter = ({ onSave }) => {
   const [steps, setSteps] = useState(0)
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]) // Текущая дата по умолчанию
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (onSave) onSave(steps)
+    if (onSave) onSave(steps, date)
   }
 
   return (
@@ -21,6 +22,15 @@ const StepCounter = ({ onSave }) => {
             value={steps}
             onChange={(e) => setSteps(Number(e.target.value))}
             min="0"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="date">Дата:</label>
+          <input 
+            type="date" 
+            id="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
           />
         </div>
         <button type="submit" className="submit-button">Сохранить</button>

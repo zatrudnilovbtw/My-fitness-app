@@ -25,6 +25,13 @@
 
 .activity-card-header {
   margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.activity-card-icon {
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
 }
 
 .activity-card-header h3 {
@@ -38,7 +45,7 @@
 .activity-card-content {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .activity-value {
@@ -47,6 +54,13 @@
   color: var(--primary-color);
   margin: 0;
   text-shadow: 1px 1px 1px rgba(0,0,0,0.05);
+}
+
+.activity-unit {
+  font-size: 1rem;
+  color: #777;
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Специальные стили для разных типов карточек */

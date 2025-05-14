@@ -11,15 +11,49 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: '*', // разрешаем запросы от любых источников
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Подключаем API маршруты
-app.use('/', apiRoutes);
+// Обработка ошибок JSON парсинга
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ message: 'Неверный формат JSON' });
+  }
+  next();
+});
+
+// Подключаем API маршруты с префиксом /api
+app.use('/api', apiRoutes);
+
+// Логируем все маршруты
+console.log('Зарегистрированные маршруты:');
+app._router.stack.forEach(function(middleware){
+  if(middleware.route){ // маршруты
+    console.log(`${Object.keys(middleware.route.methods)} ${middleware.route.path}`);
+  } else if(middleware.name === 'router'){ // маршруты подпрограмм router
+    middleware.handle.stack.forEach(function(handler){
+      if(handler.route){
+        const fullPath = `/api${handler.route.path}`;
+        console.log(`${Object.keys(handler.route.methods)} ${fullPath}`);
+      }
+    });
+  }
+});
+
+// Обработка несуществующих маршрутов
+app.use((req, res) => {
+  console.log(`Маршрут не найден: ${req.method} ${req.originalUrl}`);
+  res.status(404).json({ message: 'Маршрут не найден' });
+});
 
 // Порт
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Запускаем сервер
 const startServer = async () => {

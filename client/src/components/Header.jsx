@@ -1,21 +1,25 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 import '../styles/Header.css'
 
 const Header = () => {
   const location = useLocation();
+  const { isAuthenticated } = useAuth();
+  
+  // Если пользователь не авторизован, не показываем заголовок
+  if (!isAuthenticated) {
+    return null;
+  }
   
   return (
     <header className="header">
       <div className="header-logo">
-        <h1 >Фитнес-трекер</h1>
+        <h1>Фитнес-трекер</h1>
       </div>
       <nav className="header-nav">
         <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
           Главная
-        </Link>
-        <Link to="/activity" className={location.pathname === '/activity' ? 'active' : ''}>
-          Активность
         </Link>
         <Link to="/stats" className={location.pathname === '/stats' ? 'active' : ''}>
           Статистика

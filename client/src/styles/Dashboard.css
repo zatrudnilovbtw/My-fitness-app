@@ -96,3 +96,43 @@
       grid-template-columns: 1fr;
     }
   }
+  
+  .message-loading,
+  .message-error,
+  .message-success {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .message-loading {
+    background-color: #e5efff;
+    color: #0057b3;
+  }
+  
+  .message-error {
+    background-color: #ffe5e5;
+    color: #b30000;
+  }
+  
+  .message-success {
+    background-color: #e5ffe5;
+    color: #008000;
+  }
+  
+  .activity-chart .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 200px;
+    color: #b30000;
+    font-style: italic;
+    background-color: #ffe5e5;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 20px;
+    text-align: center;
+  }

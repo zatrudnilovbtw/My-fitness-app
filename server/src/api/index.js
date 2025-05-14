@@ -1,5 +1,7 @@
 import express from 'express';
 import activityRoutes from './routes/activityRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const router = express.Router();
 
@@ -9,6 +11,12 @@ router.get('/', (req, res) => {
 });
 
 // Подключаем маршруты активности
-router.use('/api', activityRoutes);
+router.use('/activity', activityRoutes);
+
+// Подключаем маршруты авторизации
+router.use('/auth', authRoutes);
+
+// Подключаем маршруты пользователя
+router.use('/users', userRoutes);
 
 export default router; 

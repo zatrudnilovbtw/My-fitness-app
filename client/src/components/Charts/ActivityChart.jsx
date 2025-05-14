@@ -29,11 +29,20 @@ const ActivityChart = ({ userId, period = 'week', type = 'steps' }) => {
     datasets: []
   });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchActivityData = async () => {
+      if (!userId) {
+        setLoading(false);
+        setError('Требуется авторизация');
+        return;
+      }
+
       try {
         setLoading(true);
+        setError(null);
+
         // Определяем даты периода
         const endDate = new Date();
         let startDate;
@@ -54,25 +63,22 @@ const ActivityChart = ({ userId, period = 'week', type = 'steps' }) => {
         const formattedStartDate = startDate.toISOString().split('T')[0];
         const formattedEndDate = endDate.toISOString().split('T')[0];
 
-        // Временные моковые данные (раскомментируйте код ниже для использования реальных данных с API)
-        // const activities = await activityService.getActivitiesByPeriod(userId, formattedStartDate, formattedEndDate);
+        // Получаем данные из API
+        const activities = await activityService.getActivitiesByPeriod(
+          userId, 
+          formattedStartDate, 
+          formattedEndDate
+        );
         
-        // Моковые данные (удалите этот блок, когда подключите реальный API)
-        const mockActivities = [];
-        let currentDate = new Date(startDate);
-        
-        while (currentDate <= endDate) {
-          mockActivities.push({
-            date: new Date(currentDate).toISOString().split('T')[0],
-            steps: Math.floor(Math.random() * 5000) + 5000, // Случайное число от 5000 до 10000
-            calories: Math.floor(Math.random() * 200) + 200, // Случайное число от 200 до 400
-            activityMinutes: Math.floor(Math.random() * 30) + 30, // Случайное число от 30 до 60
-          });
-          currentDate.setDate(currentDate.getDate() + 1);
+        // Если активностей нет, показываем сообщение
+        if (!activities || activities.length === 0) {
+          setError('Нет данных за выбранный период');
+          setLoading(false);
+          return;
         }
         
         // Сортируем по дате
-        const sortedActivities = mockActivities.sort((a, b) => new Date(a.date) - new Date(b.date));
+        const sortedActivities = activities.sort((a, b) => new Date(a.date) - new Date(b.date));
         
         // Подготавливаем данные для графика
         const labels = sortedActivities.map(activity => {
@@ -119,6 +125,7 @@ const ActivityChart = ({ userId, period = 'week', type = 'steps' }) => {
         setLoading(false);
       } catch (error) {
         console.error('Ошибка при загрузке данных активности:', error);
+        setError('Ошибка загрузки данных');
         setLoading(false);
       }
     };
@@ -152,6 +159,8 @@ const ActivityChart = ({ userId, period = 'week', type = 'steps' }) => {
     <div className="activity-chart">
       {loading ? (
         <div className="loading">Загрузка данных...</div>
+      ) : error ? (
+        <div className="error">{error}</div>
       ) : (
         <Line options={options} data={chartData} />
       )}

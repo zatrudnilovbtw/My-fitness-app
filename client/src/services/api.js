@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5001/api';
 
 // Создаем клиент axios
 const apiClient = axios.create({
@@ -15,7 +15,7 @@ export const activityService = {
   // Получить все активности пользователя
   getUserActivities: async (userId) => {
     try {
-      const response = await apiClient.get(`/users/${userId}/activities`);
+      const response = await apiClient.get(`/activity/users/${userId}/activities`);
       return response.data;
     } catch (error) {
       console.error('Ошибка при получении активностей:', error);
@@ -26,7 +26,7 @@ export const activityService = {
   // Получить активности за период
   getActivitiesByPeriod: async (userId, startDate, endDate) => {
     try {
-      const response = await apiClient.get(`/users/${userId}/activities/period`, {
+      const response = await apiClient.get(`/activity/users/${userId}/activities/period`, {
         params: { startDate, endDate },
       });
       return response.data;
@@ -39,7 +39,7 @@ export const activityService = {
   // Создать новую запись об активности
   createActivity: async (activityData) => {
     try {
-      const response = await apiClient.post('/activities', activityData);
+      const response = await apiClient.post('/activity/activities', activityData);
       return response.data;
     } catch (error) {
       console.error('Ошибка при создании активности:', error);
@@ -50,7 +50,7 @@ export const activityService = {
   // Обновить запись об активности
   updateActivity: async (id, activityData) => {
     try {
-      const response = await apiClient.put(`/activities/${id}`, activityData);
+      const response = await apiClient.put(`/activity/activities/${id}`, activityData);
       return response.data;
     } catch (error) {
       console.error('Ошибка при обновлении активности:', error);
@@ -61,7 +61,7 @@ export const activityService = {
   // Удалить запись об активности
   deleteActivity: async (id) => {
     try {
-      const response = await apiClient.delete(`/activities/${id}`);
+      const response = await apiClient.delete(`/activity/activities/${id}`);
       return response.data;
     } catch (error) {
       console.error('Ошибка при удалении активности:', error);

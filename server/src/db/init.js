@@ -8,7 +8,8 @@ const initDb = async () => {
     console.log('Соединение с базой данных установлено успешно.');
 
     // Синхронизация моделей с базой данных
-    await sequelize.sync({ alter: true });
+    // Используем { alter: false } чтобы предотвратить изменение типов
+    await sequelize.sync({ alter: false });
     console.log('Модели синхронизированы с базой данных.');
 
     return true;
