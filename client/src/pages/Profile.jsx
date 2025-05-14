@@ -114,42 +114,46 @@ const Profile = () => {
         
         {isEditing ? (
           <form onSubmit={handleSubmit} className="profile-form">
-            <div className="form-group">
-              <label htmlFor="name">Имя</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="age">Возраст</label>
-              <input
-                type="number"
-                id="age"
-                name="age"
-                value={formData.age}
-                onChange={handleChange}
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="gender">Пол</label>
-              <select
-                id="gender"
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-              >
-                <option value="">Выберите пол</option>
-                <option value="male">Мужской</option>
-                <option value="female">Женский</option>
-                <option value="other">Другой</option>
-              </select>
+            <div className="form-groups">
+              <div className="form-group">
+                <label htmlFor="name">Имя</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Введите ваше имя"
+                  required
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="age">Возраст</label>
+                <input
+                  type="number"
+                  id="age"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleChange}
+                  placeholder="Введите ваш возраст"
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="gender">Пол</label>
+                <select
+                  id="gender"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                >
+                  <option value="">Выберите пол</option>
+                  <option value="male">Мужской</option>
+                  <option value="female">Женский</option>
+                  <option value="other">Другой</option>
+                </select>
+              </div>
             </div>
             
             <div className="profile-buttons">
@@ -173,27 +177,27 @@ const Profile = () => {
         ) : (
           <div className="profile-info">
             <div className="info-row">
-              <span className="info-label">Email:</span>
-              <span className="info-value">{user.email}</span>
+              <div className="info-label">Email:</div>
+              <div className="info-value">{user.email}</div>
             </div>
             
             <div className="info-row">
-              <span className="info-label">Имя:</span>
-              <span className="info-value">{user.name || 'Не указано'}</span>
+              <div className="info-label">Имя:</div>
+              <div className="info-value">{user.name || 'Не указано'}</div>
             </div>
             
             <div className="info-row">
-              <span className="info-label">Возраст:</span>
-              <span className="info-value">{user.age || 'Не указан'}</span>
+              <div className="info-label">Возраст:</div>
+              <div className="info-value">{user.age || 'Не указан'}</div>
             </div>
             
             <div className="info-row">
-              <span className="info-label">Пол:</span>
-              <span className="info-value">
+              <div className="info-label">Пол:</div>
+              <div className="info-value">
                 {user.gender === 'male' ? 'Мужской' : 
                  user.gender === 'female' ? 'Женский' : 
                  user.gender === 'other' ? 'Другой' : 'Не указан'}
-              </span>
+              </div>
             </div>
             
             <div className="profile-buttons">
@@ -210,8 +214,43 @@ const Profile = () => {
       
       <div className="activity-history">
         <h3>История активности</h3>
-        <p className="no-history">История активности будет отображаться здесь</p>
-        {/* Здесь будет таблица с историей активности */}
+        
+        <div className="activity-stats-cards">
+          <div className="activity-stat-card steps">
+            <div className="stat-card-header">
+              <div className="stat-card-icon">👣</div>
+              <h4>Шаги за день</h4>
+            </div>
+            <div className="stat-card-content">
+              <p className="stat-value">111 024</p>
+              <span className="stat-unit">шагов</span>
+            </div>
+          </div>
+          
+          <div className="activity-stat-card calories">
+            <div className="stat-card-header">
+              <div className="stat-card-icon">🔥</div>
+              <h4>Сожженные калории</h4>
+            </div>
+            <div className="stat-card-content">
+              <p className="stat-value">5 552</p>
+              <span className="stat-unit">ккал</span>
+            </div>
+          </div>
+          
+          <div className="activity-stat-card activity-time">
+            <div className="stat-card-header">
+              <div className="stat-card-icon">⏱️</div>
+              <h4>Время активности</h4>
+            </div>
+            <div className="stat-card-content">
+              <p className="stat-value">1 110</p>
+              <span className="stat-unit">мин</span>
+            </div>
+          </div>
+        </div>
+        
+       
       </div>
     </div>
   )

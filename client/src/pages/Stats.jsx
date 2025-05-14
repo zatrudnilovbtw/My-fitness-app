@@ -136,37 +136,41 @@ const Stats = () => {
         </div>
       </div>
 
-      <div className="chart-container">
-        <ActivityChart 
-          userId={currentUser?.id} 
-          period={period} 
-          type={chartType} 
-        />
-      </div>
+      <div className="stats-content">
+        <div className="chart-container">
+          <ActivityChart 
+            userId={currentUser?.id} 
+            period={period} 
+            type={chartType} 
+          />
+        </div>
 
-      {loading ? (
-        <div className="loading">Загрузка статистики...</div>
-      ) : error ? (
-        <div className="error">{error}</div>
-      ) : (
-        <div className="stats-info">
-          <div className="info-card">
-            <h3>Общая статистика</h3>
-            <div className="stat-item">
-              <span>Среднее количество шагов:</span>
-              <span className="value">{stats.averageSteps.toLocaleString()}</span>
-            </div>
-            <div className="stat-item">
-              <span>Всего сожжено калорий:</span>
-              <span className="value">{stats.totalCalories.toLocaleString()}</span>
-            </div>
-            <div className="stat-item">
-              <span>Общее время активности:</span>
-              <span className="value">{stats.totalActivityMinutes} мин</span>
+        {loading ? (
+          <div className="loading">Загрузка статистики...</div>
+        ) : error ? (
+          <div className="error">{error}</div>
+        ) : (
+          <div className="stats-info">
+            <div className="info-card">
+              <h3>Общая статистика</h3>
+              <div className="stat-items">
+                <div className="stat-item">
+                  <div className="stat-label">Среднее количество шагов:</div>
+                  <div className="stat-value">{stats.averageSteps.toLocaleString()}</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-label">Всего сожжено калорий:</div>
+                  <div className="stat-value">{stats.totalCalories.toLocaleString()}</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-label">Общее время активности:</div>
+                  <div className="stat-value">{stats.totalActivityMinutes} мин</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }

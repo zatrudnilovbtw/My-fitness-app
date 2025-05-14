@@ -70,4 +70,70 @@ export const activityService = {
   },
 };
 
-export default { activityService }; 
+// Сервис для работы с психологическими оценками
+export const psychologicalService = {
+  // Получить все психологические оценки пользователя
+  getUserAssessments: async (userId) => {
+    try {
+      const response = await apiClient.get(`/psychological/users/${userId}/assessments`);
+      return response.data;
+    } catch (error) {
+      console.error('Ошибка при получении психологических оценок:', error);
+      throw error;
+    }
+  },
+
+  // Получить психологические оценки за период
+  getAssessmentsByPeriod: async (userId, startDate, endDate) => {
+    try {
+      const response = await apiClient.get(`/psychological/users/${userId}/assessments/period`, {
+        params: { startDate, endDate },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Ошибка при получении психологических оценок за период:', error);
+      throw error;
+    }
+  },
+
+  // Получить последнюю психологическую оценку пользователя
+  getLatestAssessment: async (userId) => {
+    console.log('API: Запрос последней оценки для пользователя:', userId);
+    console.log('API: Версия клиентского API 2.0');
+    try {
+      // Добавляем случайный параметр для предотвращения кэширования
+      const timestamp = new Date().getTime();
+      const response = await apiClient.get(
+        `/psychological/users/${userId}/assessments/latest?_t=${timestamp}`
+      );
+      console.log('API: Получена последняя оценка:', response.data);
+      console.log('API: ID последней оценки:', response.data.id);
+      console.log('API: Дата создания:', response.data.createdAt);
+      return response.data;
+    } catch (error) {
+      // Если оценки не найдены (404), это нормальная ситуация для нового пользователя
+      if (error.response && error.response.status === 404) {
+        console.log('API: Оценки не найдены для пользователя:', userId);
+        return null;
+      }
+      // Логируем только неожиданные ошибки
+      console.error('API: Ошибка при получении последней психологической оценки:', error);
+      throw error;
+    }
+  },
+
+  // Создать новую психологическую оценку
+  createAssessment: async (assessmentData) => {
+    console.log('API: Отправка данных оценки:', assessmentData);
+    try {
+      const response = await apiClient.post('/psychological/assessments', assessmentData);
+      console.log('API: Получен ответ от сервера:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('API: Ошибка при создании психологической оценки:', error);
+      throw error;
+    }
+  },
+};
+
+export default { activityService, psychologicalService }; 

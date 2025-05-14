@@ -1,0 +1,406 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 17.4
+-- Dumped by pg_dump version 17.4
+
+-- Started on 2025-05-14 22:18:25
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2 (class 3079 OID 16743)
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- TOC entry 4911 (class 0 OID 0)
+-- Dependencies: 2
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+--
+-- TOC entry 859 (class 1247 OID 16681)
+-- Name: enum_Users_gender; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public."enum_Users_gender" AS ENUM (
+    'male',
+    'female',
+    'other'
+);
+
+
+ALTER TYPE public."enum_Users_gender" OWNER TO postgres;
+
+--
+-- TOC entry 871 (class 1247 OID 16755)
+-- Name: gender_type; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.gender_type AS ENUM (
+    'male',
+    'female',
+    'other'
+);
+
+
+ALTER TYPE public.gender_type OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 219 (class 1259 OID 16696)
+-- Name: Activities; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Activities" (
+    id uuid NOT NULL,
+    "userId" uuid NOT NULL,
+    date date NOT NULL,
+    steps integer DEFAULT 0 NOT NULL,
+    calories double precision DEFAULT '0'::double precision NOT NULL,
+    "activityMinutes" integer DEFAULT 0 NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."Activities" OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 16709)
+-- Name: PsychologicalAssessments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."PsychologicalAssessments" (
+    id uuid NOT NULL,
+    "userId" uuid NOT NULL,
+    date date NOT NULL,
+    "stressLevel" integer NOT NULL,
+    "moodScore" integer NOT NULL,
+    "activityLevel" integer NOT NULL,
+    notes text,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."PsychologicalAssessments" OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 16687)
+-- Name: Users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Users" (
+    id uuid NOT NULL,
+    name character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    age integer,
+    gender character varying(255),
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."Users" OWNER TO postgres;
+
+--
+-- TOC entry 4904 (class 0 OID 16696)
+-- Dependencies: 219
+-- Data for Name: Activities; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Activities" (id, "userId", date, steps, calories, "activityMinutes", "createdAt", "updatedAt") FROM stdin;
+f0bac7e1-86e3-497b-93d6-cb66974261fc	f68bc7a5-c960-4b9d-9d28-63e3df884d26	2025-05-07	8500	320	45	2025-05-13 21:44:22.247234+03	2025-05-13 21:44:22.247234+03
+594d6d40-7bc1-41ed-8da0-ae491d4bfee5	f68bc7a5-c960-4b9d-9d28-63e3df884d26	2025-05-08	9200	350	50	2025-05-13 21:44:22.247234+03	2025-05-13 21:44:22.247234+03
+d13efbab-dea1-465d-a03d-cd574da90df3	f68bc7a5-c960-4b9d-9d28-63e3df884d26	2025-05-09	7800	290	40	2025-05-13 21:44:22.247234+03	2025-05-13 21:44:22.247234+03
+fb864a92-e871-4348-b215-c7dfd48b565c	f68bc7a5-c960-4b9d-9d28-63e3df884d26	2025-05-10	10500	410	60	2025-05-13 21:44:22.247234+03	2025-05-13 21:44:22.247234+03
+18572525-da51-4997-a71f-4ac822b4d2b9	f68bc7a5-c960-4b9d-9d28-63e3df884d26	2025-05-11	11200	430	65	2025-05-13 21:44:22.247234+03	2025-05-13 21:44:22.247234+03
+09056939-7f1a-4420-9461-babe5976684b	f68bc7a5-c960-4b9d-9d28-63e3df884d26	2025-05-12	9800	370	55	2025-05-13 21:44:22.247234+03	2025-05-13 21:44:22.247234+03
+f2cdb477-53f1-479a-ad21-0229bec072bb	f68bc7a5-c960-4b9d-9d28-63e3df884d26	2025-05-13	10200	400	58	2025-05-13 21:44:22.247234+03	2025-05-13 21:44:22.247234+03
+4b5831b0-44ef-4d88-ad96-a8877cc7f399	ca678dce-652c-4220-ad80-d69838060cbf	2025-05-07	7200	280	38	2025-05-13 21:44:22.247234+03	2025-05-13 21:44:22.247234+03
+2d3d4e92-714f-4993-9dff-400292951988	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	10	1	0	2025-05-14 13:04:12.883+03	2025-05-14 13:04:12.883+03
+518a7d02-0a72-4c4e-a486-8d534b07b745	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	1000	50	10	2025-05-14 13:04:25.514+03	2025-05-14 13:04:25.514+03
+cf7c3838-64b0-42b8-89cf-7943da4d370e	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-15	1000	50	10	2025-05-14 13:04:30.073+03	2025-05-14 13:04:30.073+03
+521762f1-b92d-456f-a443-b9f049447aa8	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	1	0	0	2025-05-14 13:06:53.48+03	2025-05-14 13:06:53.48+03
+2b588e35-1d5f-4003-9d10-707b9a137670	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	10000	500	100	2025-05-14 13:06:58.29+03	2025-05-14 13:06:58.29+03
+aecf6c14-2ef0-404a-888a-e30c59938832	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	12	1	0	2025-05-14 14:09:18.72+03	2025-05-14 14:09:18.72+03
+f0c3a9b3-9170-4289-9573-a5eebc1f3928	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	1	0	0	2025-05-14 15:16:07.064+03	2025-05-14 15:16:07.064+03
+d3ef614b-59a6-4b4a-a016-8213afcea395	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	0	0	0	2025-05-14 15:22:35.908+03	2025-05-14 15:22:35.908+03
+ccebe748-c3ba-4062-9f2d-c0d076a71fd8	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-13	123	6	1	2025-05-14 15:22:44.381+03	2025-05-14 15:22:44.381+03
+75acb126-7296-4278-8b06-aa097cd46f9c	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	100000	5000	1000	2025-05-14 21:15:13.816+03	2025-05-14 21:15:13.816+03
+a37b93ed-6d9e-458d-892a-2ab2a8d66576	57426106-5e02-4f8d-803e-e3f853b591e1	2025-05-14	1000	50	10	2025-05-14 22:01:02.561+03	2025-05-14 22:01:02.561+03
+6f7c64e1-9d44-4f9d-b3e4-ed9f658a9ec2	57426106-5e02-4f8d-803e-e3f853b591e1	2025-05-14	10101010	505051	101010	2025-05-14 22:01:17.423+03	2025-05-14 22:01:17.423+03
+80ebfd22-0e0d-4e60-a2ee-3399c22d4e26	57426106-5e02-4f8d-803e-e3f853b591e1	2025-05-13	10101010	505051	101010	2025-05-14 22:01:24.633+03	2025-05-14 22:01:24.633+03
+\.
+
+
+--
+-- TOC entry 4905 (class 0 OID 16709)
+-- Dependencies: 220
+-- Data for Name: PsychologicalAssessments; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."PsychologicalAssessments" (id, "userId", date, "stressLevel", "moodScore", "activityLevel", notes, "createdAt", "updatedAt") FROM stdin;
+f64e8468-4a62-40e1-9b5c-94dc54d2d7ae	f68bc7a5-c960-4b9d-9d28-63e3df884d26	2025-05-07	3	4	4	Нормальный день, немного стресса на работе	2025-05-13 21:44:22.247234+03	2025-05-13 21:44:22.247234+03
+a847d4d2-360e-4e41-864f-2a701ab6c6dd	f68bc7a5-c960-4b9d-9d28-63e3df884d26	2025-05-10	2	5	5	Отличный день, высокая продуктивность	2025-05-13 21:44:22.247234+03	2025-05-13 21:44:22.247234+03
+319ca2d5-15aa-4851-bc41-84e49fb0c1c3	f68bc7a5-c960-4b9d-9d28-63e3df884d26	2025-05-13	1	5	5	Прекрасное самочувствие, хорошая тренировка	2025-05-13 21:44:22.247234+03	2025-05-13 21:44:22.247234+03
+70a1d193-62e3-4c26-aaad-6235b272dc9c	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	4	3		2025-05-14 15:18:42.297+03	2025-05-14 15:18:42.297+03
+165047a1-750a-4edf-921e-9116b0afe986	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	5	5	5		2025-05-14 15:18:52.165+03	2025-05-14 15:18:52.165+03
+0c676fa4-b067-4ea6-9333-ce75ec210d6e	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3	все кул	2025-05-14 15:19:29.573+03	2025-05-14 15:19:29.573+03
+d261fdc1-9865-4423-948b-e2937be8e959	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3		2025-05-14 15:21:03.975+03	2025-05-14 15:21:03.975+03
+ff7bea35-2b1b-45c2-9d78-76de192561b9	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3		2025-05-14 15:21:05.3+03	2025-05-14 15:21:05.3+03
+e3df9af6-531c-4f1f-885e-435df9dde220	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3		2025-05-14 15:21:05.481+03	2025-05-14 15:21:05.481+03
+9352d314-b8d6-4d19-86d9-287077960c64	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	1	3		2025-05-14 15:21:07.077+03	2025-05-14 15:21:07.077+03
+675c1ad1-c179-4c2b-8d2f-2fe9d5fd0e26	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	4	3	чикс	2025-05-14 15:27:26.77+03	2025-05-14 15:27:26.77+03
+45c49447-c0a6-4561-b069-ccb8fd4108f2	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	5	3		2025-05-14 15:27:37.707+03	2025-05-14 15:27:37.707+03
+4c519aee-5c48-4b1c-8356-dd2ce7b80574	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	4	3	2		2025-05-14 15:27:50.012+03	2025-05-14 15:27:50.012+03
+8282e5c2-7d5a-4fda-a432-8dcaf941b591	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	5	5	5		2025-05-14 15:34:12.173+03	2025-05-14 15:34:12.173+03
+6e5d4537-a54c-4d5f-a739-9305daab6bf8	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	5	5	5		2025-05-14 15:36:47.575+03	2025-05-14 15:36:47.575+03
+0d622a5f-5bc2-49f6-ac84-b49ba8d4ad2d	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	5	5	5		2025-05-14 15:37:27.952+03	2025-05-14 15:37:27.952+03
+dcc4e0c4-c434-4c30-b98f-e21d5ad4650e	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	1	1	1		2025-05-14 15:38:22.234+03	2025-05-14 15:38:22.234+03
+6e298e27-2574-4999-ae80-76ec1f7e47f0	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	1	1	1		2025-05-14 15:38:39.998+03	2025-05-14 15:38:39.998+03
+1adb356e-366f-48d4-9800-1e9b424554ce	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3		2025-05-14 15:39:53.831+03	2025-05-14 15:39:53.831+03
+ecaceb82-5071-4fdc-b09d-5202007232be	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3		2025-05-14 15:40:20.835+03	2025-05-14 15:40:20.835+03
+b8aceb9c-9119-4c22-9bcc-88af05b3efdc	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	5	5	5		2025-05-14 15:40:57.2+03	2025-05-14 15:40:57.2+03
+010a7b75-80d7-4758-9a1f-888327764cd0	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3		2025-05-14 15:43:39.127+03	2025-05-14 15:43:39.127+03
+3d124aad-3082-48a4-b5ba-0d24b3c3a6d6	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3		2025-05-14 15:43:40.355+03	2025-05-14 15:43:40.355+03
+4a6cc1de-3e75-4160-ac46-254281567f8b	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3	12	2025-05-14 15:44:14.393+03	2025-05-14 15:44:14.393+03
+bba730e0-2c5e-406d-a408-cd0becaf23a0	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3		2025-05-14 15:45:11.762+03	2025-05-14 15:45:11.762+03
+0abe696b-762f-4031-bbfd-ff1b15bbbe0d	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3		2025-05-14 15:45:18.575+03	2025-05-14 15:45:18.575+03
+271dbeec-3775-42ef-9bcf-4ba43c93c828	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	5	5	1	все кул\n	2025-05-14 21:15:43.889+03	2025-05-14 21:15:43.889+03
+902c486d-a6cc-4fa3-8a07-26ddb58d2c89	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	3	3	nfr	2025-05-14 21:20:23.922+03	2025-05-14 21:20:23.922+03
+216c3096-d5bb-437f-b3e6-1e1875343bc4	70297496-ccf4-40bf-bd5f-4a6a7accf6c3	2025-05-14	3	1	3		2025-05-14 21:20:27.178+03	2025-05-14 21:20:27.178+03
+15686f55-076f-4edf-8dfd-3a1705b98b42	57426106-5e02-4f8d-803e-e3f853b591e1	2025-05-14	3	3	3	rqem	2025-05-14 22:01:37.64+03	2025-05-14 22:01:37.64+03
+\.
+
+
+--
+-- TOC entry 4903 (class 0 OID 16687)
+-- Dependencies: 218
+-- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Users" (id, name, email, password, age, gender, "createdAt", "updatedAt") FROM stdin;
+f68bc7a5-c960-4b9d-9d28-63e3df884d26	Иван Иванов	ivan@example.com	password123	30	male	2025-05-13 21:43:05.348547+03	2025-05-13 21:43:05.348547+03
+ca678dce-652c-4220-ad80-d69838060cbf	Анна Петрова	anna@example.com	securepass	25	female	2025-05-13 21:43:05.348547+03	2025-05-13 21:43:05.348547+03
+53c12ec0-65e6-4a88-ac14-85aa95ef172b	Алексей Сидоров	alex@example.com	alexpass	42	male	2025-05-13 21:43:05.348547+03	2025-05-13 21:43:05.348547+03
+70297496-ccf4-40bf-bd5f-4a6a7accf6c3	кент	test@gmail.com	$2b$10$nuuMynLM9OS78rdjdlGeruASEy/teTk6ek2.70iL/som5ZNaNpImu	19	male	2025-05-14 12:45:01.819+03	2025-05-14 14:09:32.194+03
+57426106-5e02-4f8d-803e-e3f853b591e1	test2	test2@gmail.com	$2b$10$lGlLPYiHbu2q0W0i5wUPoulcSDQGu1CVMbWLYEQV0mNCZgszaHlza	\N	\N	2025-05-14 22:00:48.158+03	2025-05-14 22:00:48.158+03
+59f3d8d9-a866-4653-9bd7-fe621db3017a	hec	123@mail.com	$2b$10$mhgTyGSHtRtjX5zPsGzcmu6VPpt.tz9fZV8iwH10qwBbNik/QvhCa	\N	\N	2025-05-14 22:04:46.488+03	2025-05-14 22:04:46.488+03
+\.
+
+
+--
+-- TOC entry 4749 (class 2606 OID 16703)
+-- Name: Activities Activities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Activities"
+    ADD CONSTRAINT "Activities_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4753 (class 2606 OID 16715)
+-- Name: PsychologicalAssessments PsychologicalAssessments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."PsychologicalAssessments"
+    ADD CONSTRAINT "PsychologicalAssessments_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4723 (class 2606 OID 16925)
+-- Name: Users Users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key" UNIQUE (email);
+
+
+--
+-- TOC entry 4725 (class 2606 OID 16927)
+-- Name: Users Users_email_key1; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key1" UNIQUE (email);
+
+
+--
+-- TOC entry 4727 (class 2606 OID 16945)
+-- Name: Users Users_email_key10; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key10" UNIQUE (email);
+
+
+--
+-- TOC entry 4729 (class 2606 OID 16947)
+-- Name: Users Users_email_key11; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key11" UNIQUE (email);
+
+
+--
+-- TOC entry 4731 (class 2606 OID 16929)
+-- Name: Users Users_email_key2; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key2" UNIQUE (email);
+
+
+--
+-- TOC entry 4733 (class 2606 OID 16931)
+-- Name: Users Users_email_key3; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key3" UNIQUE (email);
+
+
+--
+-- TOC entry 4735 (class 2606 OID 16933)
+-- Name: Users Users_email_key4; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key4" UNIQUE (email);
+
+
+--
+-- TOC entry 4737 (class 2606 OID 16935)
+-- Name: Users Users_email_key5; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key5" UNIQUE (email);
+
+
+--
+-- TOC entry 4739 (class 2606 OID 16937)
+-- Name: Users Users_email_key6; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key6" UNIQUE (email);
+
+
+--
+-- TOC entry 4741 (class 2606 OID 16939)
+-- Name: Users Users_email_key7; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key7" UNIQUE (email);
+
+
+--
+-- TOC entry 4743 (class 2606 OID 16941)
+-- Name: Users Users_email_key8; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key8" UNIQUE (email);
+
+
+--
+-- TOC entry 4745 (class 2606 OID 16943)
+-- Name: Users Users_email_key9; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_email_key9" UNIQUE (email);
+
+
+--
+-- TOC entry 4747 (class 2606 OID 16693)
+-- Name: Users Users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Users"
+    ADD CONSTRAINT "Users_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4750 (class 1259 OID 16971)
+-- Name: idx_activities_date; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_activities_date ON public."Activities" USING btree (date);
+
+
+--
+-- TOC entry 4751 (class 1259 OID 16761)
+-- Name: idx_activities_user_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_activities_user_id ON public."Activities" USING btree ("userId");
+
+
+--
+-- TOC entry 4754 (class 1259 OID 16983)
+-- Name: idx_psychological_date; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_psychological_date ON public."PsychologicalAssessments" USING btree (date);
+
+
+--
+-- TOC entry 4755 (class 1259 OID 16763)
+-- Name: idx_psychological_user_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_psychological_user_id ON public."PsychologicalAssessments" USING btree ("userId");
+
+
+--
+-- TOC entry 4756 (class 2606 OID 16966)
+-- Name: Activities Activities_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Activities"
+    ADD CONSTRAINT "Activities_userId_fkey" FOREIGN KEY ("userId") REFERENCES public."Users"(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 4757 (class 2606 OID 16978)
+-- Name: PsychologicalAssessments PsychologicalAssessments_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."PsychologicalAssessments"
+    ADD CONSTRAINT "PsychologicalAssessments_userId_fkey" FOREIGN KEY ("userId") REFERENCES public."Users"(id) ON UPDATE CASCADE;
+
+
+-- Completed on 2025-05-14 22:18:25
+
+--
+-- PostgreSQL database dump complete
+--
+

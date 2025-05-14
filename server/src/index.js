@@ -41,10 +41,26 @@ app._router.stack.forEach(function(middleware){
       if(handler.route){
         const fullPath = `/api${handler.route.path}`;
         console.log(`${Object.keys(handler.route.methods)} ${fullPath}`);
+      } else if (handler.name === 'router') {
+        // Проверяем подмаршруты второго уровня
+        const baseUrl = getBasePath(middleware);
+        handler.handle.stack.forEach(function(subHandler) {
+          if (subHandler.route) {
+            const fullSubPath = `/api${baseUrl}${subHandler.route.path}`;
+            console.log(`${Object.keys(subHandler.route.methods)} ${fullSubPath}`);
+          }
+        });
       }
     });
   }
 });
+
+// Функция для получения базового пути роутера
+function getBasePath(middleware) {
+  // Извлекаем базовый путь из роутера
+  // Например, для /api/psychological/
+  return middleware.regexp.toString().match(/^\^\\\/([^\\]+)/)?.[1] || '';
+}
 
 // Обработка несуществующих маршрутов
 app.use((req, res) => {

@@ -40,7 +40,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-form">
-        <h2>Вход</h2>
+        <h2>Вход в аккаунт</h2>
         
         {error && <div className="error-message">{error}</div>}
         
@@ -54,6 +54,7 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              autoFocus
             />
           </div>
           
@@ -65,17 +66,17 @@ const Login = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              required
+                required
             />
           </div>
           
           <button type="submit" className="login-button" disabled={loading}>
-            {loading ? 'Вход...' : 'Войти'}
+            {loading ? 'Вход...' : 'Войти в аккаунт'}
           </button>
         </form>
         
         <div className="register-link">
-          Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
+          Нет аккаунта? <Link to="/register">Создать аккаунт</Link>
         </div>
       </div>
     </div>

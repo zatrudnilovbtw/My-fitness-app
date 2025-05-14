@@ -13,7 +13,7 @@ const Registration = () => {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const { register } = useAuth()
+  const { register, login } = useAuth()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -39,12 +39,23 @@ const Registration = () => {
 
     setLoading(true)
     
-    const result = await register(formData.name, formData.email, formData.password)
+    // Регистрация пользователя
+    const registerResult = await register(formData.name, formData.email, formData.password)
     
-    if (result.success) {
-      navigate('/login')
+    if (registerResult.success) {
+      // После успешной регистрации сразу выполняем вход
+      const loginResult = await login(formData.email, formData.password)
+      
+      if (loginResult.success) {
+        // После успешного входа перенаправляем на главную страницу
+        navigate('/')
+      } else {
+        // Если вход не удался, показываем ошибку
+        setError(loginResult.message || 'Регистрация успешна, но вход не удался. Пожалуйста, войдите вручную.')
+        navigate('/login')
+      }
     } else {
-      setError(result.message)
+      setError(registerResult.message)
     }
     
     setLoading(false)
@@ -53,7 +64,7 @@ const Registration = () => {
   return (
     <div className="registration-container">
       <div className="registration-form">
-        <h2>Регистрация</h2>
+        <h2>Создайте аккаунт</h2>
         
         {error && <div className="error-message">{error}</div>}
         
@@ -67,6 +78,7 @@ const Registration = () => {
               value={formData.name}
               onChange={handleChange}
               required
+              autoFocus
             />
           </div>
           
@@ -107,7 +119,7 @@ const Registration = () => {
           </div>
           
           <button type="submit" className="register-button" disabled={loading}>
-            {loading ? 'Регистрация...' : 'Зарегистрироваться'}
+            {loading ? 'Регистрация...' : 'Создать аккаунт'}
           </button>
         </form>
         
